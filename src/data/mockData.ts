@@ -2,6 +2,14 @@ import { NavItem, Note, Task, CourseProgress } from '../types';
 
 export const navigationData: NavItem[] = [
   {
+    id: 'workbench',
+    label: 'Workbench',
+    icon: 'Briefcase',
+    children: [
+      { id: 'workbench', label: 'Sources & AI', icon: 'Brain' }
+    ]
+  },
+  {
     id: 'dashboard',
     label: 'Dashboard',
     icon: 'LayoutDashboard',
@@ -40,7 +48,9 @@ export const navigationData: NavItem[] = [
       { id: 'profile', label: 'Profile', icon: 'User' },
       { id: 'theme', label: 'Theme & Layout', icon: 'Palette' },
       { id: 'privacy', label: 'Privacy & Backup', icon: 'Shield' },
-      { id: 'integrations', label: 'AI & Integrations', icon: 'Plug' }
+      { id: 'integrations', label: 'AI & Integrations', icon: 'Plug' },
+      { id: 'notifications', label: 'Notifications', icon: 'Bell' },
+      { id: 'security', label: 'Security', icon: 'Lock' }
     ]
   }
 ];

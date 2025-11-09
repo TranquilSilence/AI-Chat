@@ -1,12 +1,36 @@
-import { TrendingUp } from 'lucide-react';
+import { TrendingUp, Plus, BookOpen, Calendar, Brain } from 'lucide-react';
 import { mockCourseProgress } from '../../data/mockData';
 
 export default function ProgressOverview() {
   return (
     <div className="space-y-6">
-      <div className="flex items-center gap-3">
-        <TrendingUp className="text-blue-600" size={28} />
-        <h2 className="text-3xl font-bold">Progress Overview</h2>
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <TrendingUp className="text-blue-600" size={28} />
+          <h2 className="text-3xl font-bold">Progress Overview</h2>
+        </div>
+      </div>
+
+      <div className="card bg-gradient-to-r from-blue-600 to-purple-600 text-white">
+        <h3 className="text-lg font-semibold mb-4">Quick Actions</h3>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          <button className="flex flex-col items-center gap-2 p-4 bg-white/10 hover:bg-white/20 rounded-lg transition-all hover:scale-105 backdrop-blur-sm">
+            <Plus size={24} />
+            <span className="text-sm font-medium">New Note</span>
+          </button>
+          <button className="flex flex-col items-center gap-2 p-4 bg-white/10 hover:bg-white/20 rounded-lg transition-all hover:scale-105 backdrop-blur-sm">
+            <BookOpen size={24} />
+            <span className="text-sm font-medium">Add Task</span>
+          </button>
+          <button className="flex flex-col items-center gap-2 p-4 bg-white/10 hover:bg-white/20 rounded-lg transition-all hover:scale-105 backdrop-blur-sm">
+            <Calendar size={24} />
+            <span className="text-sm font-medium">View Calendar</span>
+          </button>
+          <button className="flex flex-col items-center gap-2 p-4 bg-white/10 hover:bg-white/20 rounded-lg transition-all hover:scale-105 backdrop-blur-sm">
+            <Brain size={24} />
+            <span className="text-sm font-medium">AI Assistant</span>
+          </button>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

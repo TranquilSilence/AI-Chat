@@ -1,7 +1,35 @@
-import { Compass, TrendingUp, Eye, Heart } from 'lucide-react';
+import { Compass, TrendingUp, Eye, Heart, MessageCircle, Share2, Bookmark } from 'lucide-react';
 import { mockPublicNotes } from '../../data/mockData';
+import { useState } from 'react';
 
 export default function ExploreTrending() {
+  const [likedNotes, setLikedNotes] = useState<Set<string>>(new Set());
+  const [bookmarkedNotes, setBookmarkedNotes] = useState<Set<string>>(new Set());
+
+  const toggleLike = (noteId: string) => {
+    setLikedNotes(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(noteId)) {
+        newSet.delete(noteId);
+      } else {
+        newSet.add(noteId);
+      }
+      return newSet;
+    });
+  };
+
+  const toggleBookmark = (noteId: string) => {
+    setBookmarkedNotes(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(noteId)) {
+        newSet.delete(noteId);
+      } else {
+        newSet.add(noteId);
+      }
+      return newSet;
+    });
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -52,17 +80,49 @@ export default function ExploreTrending() {
             </div>
 
             <div className="flex items-center justify-between pt-4 border-t border-gray-200">
-              <div className="flex items-center gap-4 text-sm text-gray-600">
-                <span className="flex items-center gap-1">
+              <div className="flex items-center gap-4 text-sm">
+                <span className="flex items-center gap-1 text-gray-600">
                   <Eye size={16} />
                   {note.views}
                 </span>
-                <span className="flex items-center gap-1">
-                  <Heart size={16} />
-                  {note.likes}
-                </span>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    toggleLike(note.id);
+                  }}
+                  className={`flex items-center gap-1 transition-colors ${
+                    likedNotes.has(note.id)
+                      ? 'text-red-600'
+                      : 'text-gray-600 hover:text-red-600'
+                  }`}
+                >
+                  <Heart size={16} fill={likedNotes.has(note.id) ? 'currentColor' : 'none'} />
+                  {(note.likes || 0) + (likedNotes.has(note.id) ? 1 : 0)}
+                </button>
+                <button className="flex items-center gap-1 text-gray-600 hover:text-blue-600 transition-colors">
+                  <MessageCircle size={16} />
+                  12
+                </button>
               </div>
-              <button className="btn-secondary text-sm">View</button>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    toggleBookmark(note.id);
+                  }}
+                  className={`p-2 rounded-lg transition-all ${
+                    bookmarkedNotes.has(note.id)
+                      ? 'bg-blue-100 text-blue-600'
+                      : 'hover:bg-gray-100 text-gray-600'
+                  }`}
+                >
+                  <Bookmark size={18} fill={bookmarkedNotes.has(note.id) ? 'currentColor' : 'none'} />
+                </button>
+                <button className="p-2 hover:bg-gray-100 text-gray-600 rounded-lg transition-colors">
+                  <Share2 size={18} />
+                </button>
+                <button className="btn-primary text-sm">View</button>
+              </div>
             </div>
           </div>
         ))}

@@ -11,12 +11,16 @@ import SharedNotes from './components/views/SharedNotes';
 import ExploreTrending from './components/views/ExploreTrending';
 import Contributors from './components/views/Contributors';
 import Settings from './components/views/Settings';
+import Workbench from './components/views/Workbench';
 
 function App() {
-  const [activeView, setActiveView] = useState('progress');
+  const [activeView, setActiveView] = useState('workbench');
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   const renderView = () => {
     switch (activeView) {
+      case 'workbench':
+        return <Workbench />;
       case 'progress':
         return <ProgressOverview />;
       case 'activities':
@@ -41,17 +45,26 @@ function App() {
       case 'theme':
       case 'privacy':
       case 'integrations':
+      case 'notifications':
+      case 'security':
         return <Settings activeSubView={activeView} />;
       default:
-        return <ProgressOverview />;
+        return <Workbench />;
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Sidebar activeView={activeView} onNavigate={setActiveView} />
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
+      <Sidebar
+        activeView={activeView}
+        onNavigate={setActiveView}
+        isCollapsed={sidebarCollapsed}
+        onToggleCollapse={() => setSidebarCollapsed(!sidebarCollapsed)}
+      />
 
-      <main className="ml-64 p-8">
+      <main className={`${
+        sidebarCollapsed ? 'ml-20' : 'ml-64'
+      } p-8 transition-all duration-300`}>
         <div className="max-w-7xl mx-auto">
           {renderView()}
         </div>

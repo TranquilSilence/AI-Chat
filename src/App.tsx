@@ -54,7 +54,7 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
+    <div className="min-h-screen bg-background transition-colors duration-300">
       <Sidebar
         activeView={activeView}
         onNavigate={setActiveView}
@@ -64,7 +64,7 @@ function App() {
 
       <main className={`${
         sidebarCollapsed ? 'ml-20' : 'ml-64'
-      } p-8 transition-all duration-300`}>
+      } p-8 transition-all duration-300 min-h-screen`}>
         <div className="max-w-7xl mx-auto">
           {renderView()}
         </div>

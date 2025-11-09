@@ -1,42 +1,73 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
-  body {
-    @apply bg-gray-50 text-gray-900;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    line-height: 1.6;
+  :root {
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8fafc;
+    --bg-tertiary: #f1f5f9;
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --text-tertiary: #64748b;
+    --border-color: #e2e8f0;
+    --accent-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
   }
 
-  * {
-    @apply transition-colors duration-200;
+  .dark {
+    --bg-primary: #0f172a;
+    --bg-secondary: #1e293b;
+    --bg-tertiary: #334155;
+    --text-primary: #f1f5f9;
+    --text-secondary: #cbd5e1;
+    --text-tertiary: #94a3b8;
+    --border-color: #334155;
+    --accent-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+  }
+
+  body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    line-height: 1.6;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 }
 
 @layer components {
-  .sidebar-item {
-    @apply flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 cursor-pointer;
-  }
-
-  .sidebar-item:hover {
-    @apply bg-blue-50;
-  }
-
-  .sidebar-item.active {
-    @apply bg-blue-600 text-white;
-  }
-
-  .card {
-    @apply bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 p-6 border border-gray-100;
-  }
-
   .btn-primary {
-    @apply bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 hover:scale-105 active:scale-95 transition-all duration-200 font-medium shadow-md hover:shadow-lg;
+    @apply relative overflow-hidden bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white px-6 py-2.5 rounded-xl font-semibold shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-200;
   }
 
   .btn-secondary {
-    @apply bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200 hover:scale-105 active:scale-95 transition-all duration-200 font-medium;
+    @apply px-6 py-2.5 rounded-xl hover:scale-105 active:scale-95 transition-all duration-200 font-semibold shadow-md hover:shadow-lg;
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+  }
+
+  .btn-secondary:hover {
+    background-color: var(--bg-tertiary);
+  }
+
+  .card {
+    @apply rounded-2xl transition-all duration-300 p-6 backdrop-blur-sm;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--card-shadow);
+  }
+
+  .card:hover {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  }
+
+  .dark .card:hover {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
   }
 }
 
@@ -74,6 +105,24 @@
     }
   }
 
+  @keyframes shimmer {
+    0% {
+      background-position: -1000px 0;
+    }
+    100% {
+      background-position: 1000px 0;
+    }
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
   .animate-fadeIn {
     animation: fadeIn 0.3s ease-out;
   }
@@ -86,11 +135,23 @@
     animation: scaleIn 0.2s ease-out;
   }
 
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
   .gradient-text {
-    @apply bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent font-bold;
   }
 
   .glass-effect {
-    @apply bg-white/10 backdrop-blur-md border border-white/20;
+    @apply bg-white/10 backdrop-blur-md border border-white/20 shadow-xl;
+  }
+
+  .bg-background {
+    background-color: var(--bg-primary);
+  }
+
+  .text-foreground {
+    color: var(--text-primary);
   }
 }

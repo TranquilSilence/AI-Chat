@@ -69,7 +69,7 @@ export default function Sidebar({ activeView, onNavigate, isCollapsed, onToggleC
           )}
         </div>
 
-        <nav className="space-y-1.5">
+        <nav className={`space-y-1.5 ${isCollapsed ? '' : 'max-h-[calc(100vh-28rem)] overflow-y-auto scrollbar-thin pr-1'}`}>
           {navigationData.map((item: NavItem) => (
             <div key={item.id}>
               <button

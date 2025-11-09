@@ -1,0 +1,63 @@
+import { useState } from 'react';
+import Sidebar from './components/layout/Sidebar';
+import ProgressOverview from './components/views/ProgressOverview';
+import RecentActivities from './components/views/RecentActivities';
+import UpcomingDeadlines from './components/views/UpcomingDeadlines';
+import AIInsights from './components/views/AIInsights';
+import MyKnowledge from './components/views/MyKnowledge';
+import HomeworkResources from './components/views/HomeworkResources';
+import ArchiveTrash from './components/views/ArchiveTrash';
+import SharedNotes from './components/views/SharedNotes';
+import ExploreTrending from './components/views/ExploreTrending';
+import Contributors from './components/views/Contributors';
+import Settings from './components/views/Settings';
+
+function App() {
+  const [activeView, setActiveView] = useState('progress');
+
+  const renderView = () => {
+    switch (activeView) {
+      case 'progress':
+        return <ProgressOverview />;
+      case 'activities':
+        return <RecentActivities />;
+      case 'deadlines':
+        return <UpcomingDeadlines />;
+      case 'ai-insights':
+        return <AIInsights />;
+      case 'storage':
+        return <MyKnowledge />;
+      case 'homework':
+        return <HomeworkResources />;
+      case 'archive':
+        return <ArchiveTrash />;
+      case 'shared':
+        return <SharedNotes />;
+      case 'explore':
+        return <ExploreTrending />;
+      case 'contributors':
+        return <Contributors />;
+      case 'profile':
+      case 'theme':
+      case 'privacy':
+      case 'integrations':
+        return <Settings activeSubView={activeView} />;
+      default:
+        return <ProgressOverview />;
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <Sidebar activeView={activeView} onNavigate={setActiveView} />
+
+      <main className="ml-64 p-8">
+        <div className="max-w-7xl mx-auto">
+          {renderView()}
+        </div>
+      </main>
+    </div>
+  );
+}
+
+export default App;

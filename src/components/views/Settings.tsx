@@ -1,4 +1,5 @@
-import { User, Palette, Shield, Plug, Bell, Lock, Smartphone, Mail, MessageSquare } from 'lucide-react';
+import { User, Palette, Shield, Plug, Bell, Lock, Smartphone, Mail, MessageSquare, Moon, Sun, Monitor } from 'lucide-react';
+import { useTheme } from '../../contexts/ThemeContext';
 
 interface SettingsProps {
   activeSubView: string;
@@ -52,6 +53,8 @@ export default function Settings({ activeSubView }: SettingsProps) {
   }
 
   if (activeSubView === 'theme') {
+    const { theme, toggleTheme } = useTheme();
+
     return (
       <div className="space-y-6">
         <div className="flex items-center gap-3">
@@ -60,11 +63,60 @@ export default function Settings({ activeSubView }: SettingsProps) {
         </div>
 
         <div className="card">
-          <h3 className="text-lg font-semibold mb-4">Color Theme</h3>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {['Blue', 'Dark', 'Light', 'System'].map(theme => (
-              <div key={theme} className={`p-4 border-2 rounded-lg cursor-pointer transition-all ${theme === 'Blue' ? 'border-blue-600 bg-blue-50' : 'border-gray-300 hover:border-blue-400'}`}>
-                <div className="text-center font-medium">{theme}</div>
+          <h3 className="text-lg font-semibold mb-4">Appearance Mode</h3>
+          <div className="grid grid-cols-2 gap-4">
+            <button
+              onClick={theme === 'dark' ? toggleTheme : undefined}
+              className={`p-6 border-2 rounded-xl cursor-pointer transition-all hover:scale-105 ${
+                theme === 'light'
+                  ? 'border-blue-500 bg-blue-50 shadow-lg'
+                  : 'border-gray-300 hover:border-blue-400'
+              }`}
+            >
+              <div className="flex flex-col items-center gap-3">
+                <div className="p-3 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full">
+                  <Sun size={24} className="text-white" />
+                </div>
+                <div className="font-semibold">Light Mode</div>
+                <div className="text-xs text-gray-500">Bright and clear</div>
+              </div>
+            </button>
+
+            <button
+              onClick={theme === 'light' ? toggleTheme : undefined}
+              className={`p-6 border-2 rounded-xl cursor-pointer transition-all hover:scale-105 ${
+                theme === 'dark'
+                  ? 'border-blue-500 bg-blue-50 shadow-lg'
+                  : 'border-gray-300 hover:border-blue-400'
+              }`}
+            >
+              <div className="flex flex-col items-center gap-3">
+                <div className="p-3 bg-gradient-to-br from-slate-700 to-slate-900 rounded-full">
+                  <Moon size={24} className="text-white" />
+                </div>
+                <div className="font-semibold">Dark Mode</div>
+                <div className="text-xs text-gray-500">Easy on the eyes</div>
+              </div>
+            </button>
+          </div>
+        </div>
+
+        <div className="card">
+          <h3 className="text-lg font-semibold mb-4">Sidebar Theme</h3>
+          <div className="grid grid-cols-3 gap-4">
+            {[
+              { name: 'Slate', colors: 'from-slate-900 to-slate-800', active: true },
+              { name: 'Ocean', colors: 'from-blue-900 to-blue-700', active: false },
+              { name: 'Forest', colors: 'from-emerald-900 to-emerald-700', active: false }
+            ].map(sidebarTheme => (
+              <div
+                key={sidebarTheme.name}
+                className={`p-4 border-2 rounded-lg cursor-pointer transition-all hover:scale-105 ${
+                  sidebarTheme.active ? 'border-blue-600 bg-blue-50' : 'border-gray-300 hover:border-blue-400'
+                }`}
+              >
+                <div className={`w-full h-20 bg-gradient-to-br ${sidebarTheme.colors} rounded-lg mb-2`}></div>
+                <div className="text-center font-medium text-sm">{sidebarTheme.name}</div>
               </div>
             ))}
           </div>
@@ -88,11 +140,37 @@ export default function Settings({ activeSubView }: SettingsProps) {
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Font Size</label>
               <select className="w-full px-4 py-2 border border-gray-300 rounded-lg">
-                <option>Small</option>
-                <option selected>Medium</option>
-                <option>Large</option>
+                <option>Small (14px)</option>
+                <option selected>Medium (16px)</option>
+                <option>Large (18px)</option>
               </select>
             </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Font Family</label>
+              <select className="w-full px-4 py-2 border border-gray-300 rounded-lg">
+                <option selected>Inter (Default)</option>
+                <option>System Font</option>
+                <option>Monospace</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div className="card">
+          <h3 className="text-lg font-semibold mb-4">Display Preferences</h3>
+          <div className="space-y-3">
+            <label className="flex items-center justify-between p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+              <span>Compact Mode</span>
+              <input type="checkbox" className="w-5 h-5" />
+            </label>
+            <label className="flex items-center justify-between p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+              <span>Show Animations</span>
+              <input type="checkbox" defaultChecked className="w-5 h-5" />
+            </label>
+            <label className="flex items-center justify-between p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+              <span>Reduce Motion</span>
+              <input type="checkbox" className="w-5 h-5" />
+            </label>
           </div>
         </div>
       </div>

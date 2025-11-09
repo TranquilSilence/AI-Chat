@@ -63,7 +63,7 @@ function App() {
       />
 
       <main className={`${
-        sidebarCollapsed ? 'ml-20' : 'ml-64'
+        sidebarCollapsed ? 'ml-16' : 'ml-72'
       } p-8 transition-all duration-300 min-h-screen`}>
         <div className="max-w-7xl mx-auto">
           {renderView()}

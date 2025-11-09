@@ -1,4 +1,4 @@
-import { FileText, Link, FileUp, Brain, Search, CheckSquare, Trash2, Eye, Code, Lightbulb } from 'lucide-react';
+import { FileText, Link, Search, CheckSquare, Trash2, Code, Lightbulb, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useState } from 'react';
 import MindMap from '../workbench/MindMap';
 import ChatPrompt from '../workbench/ChatPrompt';
@@ -14,6 +14,8 @@ interface Source {
 
 export default function Workbench() {
   const [selectedSources, setSelectedSources] = useState<string[]>([]);
+  const [leftPanelVisible, setLeftPanelVisible] = useState(true);
+  const [rightPanelVisible, setRightPanelVisible] = useState(true);
   const [sources] = useState<Source[]>([
     { id: '1', type: 'pdf', title: 'Machine Learning Basics.pdf', addedAt: '2025-11-08', size: '3.2 MB' },
     { id: '2', type: 'link', title: 'React Documentation', url: 'https://react.dev', addedAt: '2025-11-07' },
@@ -57,8 +59,9 @@ export default function Workbench() {
         </div>
       </div>
 
-      <div className="grid grid-cols-12 gap-4 h-[calc(100vh-14rem)]">
-        <div className="col-span-3 space-y-4 overflow-y-auto scrollbar-thin pr-2">
+      <div className="relative flex gap-4 h-[calc(100vh-14rem)]">
+        {leftPanelVisible && (
+          <div className="w-80 space-y-4 overflow-y-auto scrollbar-thin pr-2 transition-all duration-300">
           <div className="card">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-lg font-semibold">Sources</h3>
@@ -146,15 +149,34 @@ export default function Workbench() {
               <span className="font-medium">{selectedSources.length} source(s) selected</span>
             </div>
           </div>
-        </div>
+          </div>
+        )}
 
-        <div className="col-span-4">
+        <button
+          onClick={() => setLeftPanelVisible(!leftPanelVisible)}
+          className={`absolute ${leftPanelVisible ? 'left-80' : 'left-0'} top-1/2 -translate-y-1/2 z-10 p-2 bg-white rounded-lg shadow-lg hover:bg-gray-50 transition-all border border-gray-200`}
+          title={leftPanelVisible ? 'Hide sources panel' : 'Show sources panel'}
+        >
+          {leftPanelVisible ? <ChevronLeft size={20} className="text-gray-600" /> : <ChevronRight size={20} className="text-gray-600" />}
+        </button>
+
+        <div className="flex-1 transition-all duration-300">
           <MindMap />
         </div>
 
-        <div className="col-span-5">
-          <ChatPrompt />
-        </div>
+        <button
+          onClick={() => setRightPanelVisible(!rightPanelVisible)}
+          className={`absolute ${rightPanelVisible ? 'right-96' : 'right-0'} top-1/2 -translate-y-1/2 z-10 p-2 bg-white rounded-lg shadow-lg hover:bg-gray-50 transition-all border border-gray-200`}
+          title={rightPanelVisible ? 'Hide AI assistant' : 'Show AI assistant'}
+        >
+          {rightPanelVisible ? <ChevronRight size={20} className="text-gray-600" /> : <ChevronLeft size={20} className="text-gray-600" />}
+        </button>
+
+        {rightPanelVisible && (
+          <div className="w-96 transition-all duration-300">
+            <ChatPrompt />
+          </div>
+        )}
       </div>
     </div>
   );

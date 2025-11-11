@@ -54,7 +54,7 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-background transition-colors duration-300">
+    <div className="min-h-screen bg-background transition-colors duration-300 flex flex-col md:flex-row">
       <Sidebar
         activeView={activeView}
         onNavigate={setActiveView}
@@ -62,9 +62,7 @@ function App() {
         onToggleCollapse={() => setSidebarCollapsed(!sidebarCollapsed)}
       />
 
-      <main className={`${
-        sidebarCollapsed ? 'ml-16' : 'ml-72'
-      } p-8 transition-all duration-300 min-h-screen`}>
+      <main className="flex-1 w-full md:w-auto p-4 md:p-8 transition-all duration-300 min-h-screen">
         <div className="max-w-7xl mx-auto">
           {renderView()}
         </div>

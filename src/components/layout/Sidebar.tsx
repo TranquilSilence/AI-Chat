@@ -29,7 +29,7 @@ export default function Sidebar({ activeView, onNavigate, isCollapsed, onToggleC
   return (
     <aside className={`${
       isCollapsed ? 'w-16' : 'w-72'
-    } bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 text-white min-h-screen fixed left-0 top-0 overflow-y-auto transition-all duration-300 shadow-2xl z-50 border-r border-slate-700/50`}>
+    } bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 text-white min-h-screen md:relative fixed left-0 top-0 bottom-0 ${isCollapsed ? 'max-md:translate-x-[-100%]' : ''} overflow-y-auto transition-all duration-300 shadow-2xl z-50 border-r border-slate-700/50 md:flex md:flex-col`}>
       <div className={`${isCollapsed ? 'p-3' : 'p-5'}`}>
         <div className={`flex items-center justify-between ${isCollapsed ? 'mb-6' : 'mb-8'}`}>
           {!isCollapsed ? (
